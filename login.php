@@ -1,64 +1,3 @@
-<?php
-session_start();
-include('./include/config.php');
-$error='';
-$msg='';
-$Logintype=mysqli_real_escape_string($conn,$_GET['Logintype']);
-
-if(isset($_POST['login']))
-{
-	$UserName = $_POST['UserName'];
-    $Password = $_POST['Password'];
-	if($Logintype=="ADMIN"){
-		$sql = "SELECT * FROM `admin` WHERE `UserName` = '$UserName' ";
-    	$query = mysqli_query($conn,$sql);
-   		$row = mysqli_fetch_array($query);
-		if($row['UserName']==$UserName){
-			if($row['Password']==$Password){
-				$_SESSION['sess_user'] = $row['UserName'];
-            	echo "<script type='text/javascript'> document.location = './admin/dashboard.php'; </script>";
-			}
-			else{
-				$error="Password Incorrect";
-			}
-		}else{
-			$error="UserName Incorrect";
-		}   
-	}
-	elseif($Logintype=="STUDENT"||$Logintype=="FACULTY"){
-		$sql = "SELECT * FROM `users` WHERE `UserName` = '$UserName' ";
-    	$query = mysqli_query($conn,$sql);
-   		$row = mysqli_fetch_array($query);
-		if($row['UserName']==$UserName){
-			if($row['Password']==$Password){
-				$_SESSION['sess_user'] = $row['UserName'];
-            	echo "<script type='text/javascript'> document.location = './student/dashboard.php'; </script>";
-			}
-			else{
-				$error="Password Incorrect";
-			}
-		}else{
-			$error="UserName Incorrect";
-		}
-	}   
-	elseif($Logintype=="COMMITEE"){
-		$sql = "SELECT * FROM `committee` WHERE `UserName` = '$UserName' ";
-    	$query = mysqli_query($conn,$sql);
-   		$row = mysqli_fetch_array($query);
-		if($row['UserName']==$UserName){
-			if($row['Password']==$Password){
-				$_SESSION['sess_user'] = $row['UserName'];
-            	echo "<script type='text/javascript'> document.location = './committee/dashboard.php'; </script>";
-			}
-			else{
-				$error="Password Incorrect";
-			}
-		}else{
-			$error="UserName Incorrect";
-		}
-	}
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -82,7 +21,7 @@ if(isset($_POST['login']))
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<!-- fonts-->
 	<link href="https://fonts.googleapis.com/css2?family=Artifika&family=Oldenburg&display=swap" rel="stylesheet">
-<style type="text/css">
+	<style type="text/css">
 	.navbar-nav .nav-item .nav-link {
 		color: #000;
 	}
@@ -213,7 +152,7 @@ if(isset($_POST['login']))
         color: white;
     }
     
-</style>
+	</style>
 </head>
 
 <body data-spy="scroll" data-target=".fixed-top">
@@ -245,20 +184,20 @@ if(isset($_POST['login']))
 				<div class="card mb-5 p-2 shadow rounded">
 					<div class="card-body">
 						<div class="row mt-5 mb-4">
-							<h3 class="mx-auto"><?php echo htmlentities($Logintype) ?> LOGIN</h3>
+							<h3 class="mx-auto">MENTOR LOGIN</h3>
 						</div>
-						<form method="POST">
+						<form>
 							<div class="mb-3">
-                                <label for="formGroupExampleInput" class="form-label font-weight-bold text-dark">UserName :</label>
-                                <input type="text" class="form-control shadow-none" id="formGroupExampleInput" name="UserName" placeholder="Registration ID">
+                                <label for="formGroupExampleInput" class="form-label font-weight-bold text-dark">REGISTRATION ID :</label>
+                                <input type="text" class="form-control shadow-none" id="formGroupExampleInput" placeholder="Registration ID">
                               </div>
                               <div class="mb-3">
                                 <label for="formGroupExampleInput2" class="form-label font-weight-bold text-dark">PASSWORD :</label>
-                                <input type="text" class="form-control shadow-none" id="formGroupExampleInput2" name="Password" placeholder="Password">
+                                <input type="text" class="form-control shadow-none" id="formGroupExampleInput2" placeholder="Password">
                               </div>
                               <div class="row mt-5 mb-3">
                                   
-                                  <div class="col-sm-3 mb-4 d-grid gap-2 mx-auto"><button class="btn" type="Submit" name="login">SUBMIT</button></div>
+                                  <div class="col-sm-3 mb-4 d-grid gap-2 mx-auto"><button class="btn">SUBMIT</button></div>
                                 
                               </div>
 							
