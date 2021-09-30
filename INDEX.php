@@ -1,64 +1,3 @@
-<?php
-session_start();
-include('./include/config.php');
-$error='';
-$msg='';
-$Logintype=mysqli_real_escape_string($conn,$_GET['Logintype']);
-
-if(isset($_POST['login']))
-{
-	$UserName = $_POST['UserName'];
-    $Password = $_POST['Password'];
-	if($Logintype=="ADMIN"){
-		$sql = "SELECT * FROM `admin` WHERE `UserName` = '$UserName' ";
-    	$query = mysqli_query($conn,$sql);
-   		$row = mysqli_fetch_array($query);
-		if($row['UserName']==$UserName){
-			if($row['Password']==$Password){
-				$_SESSION['sess_user'] = $row['UserName'];
-            	echo "<script type='text/javascript'> document.location = './admin/dashboard.php'; </script>";
-			}
-			else{
-				$error="Password Incorrect";
-			}
-		}else{
-			$error="UserName Incorrect";
-		}   
-	}
-	elseif($Logintype=="STUDENT"||$Logintype=="FACULTY"){
-		$sql = "SELECT * FROM `users` WHERE `UserName` = '$UserName' ";
-    	$query = mysqli_query($conn,$sql);
-   		$row = mysqli_fetch_array($query);
-		if($row['UserName']==$UserName){
-			if($row['Password']==$Password){
-				$_SESSION['sess_user'] = $row['UserName'];
-            	echo "<script type='text/javascript'> document.location = './student/dashboard.php'; </script>";
-			}
-			else{
-				$error="Password Incorrect";
-			}
-		}else{
-			$error="UserName Incorrect";
-		}
-	}   
-	elseif($Logintype=="COMMITEE"){
-		$sql = "SELECT * FROM `committee` WHERE `UserName` = '$UserName' ";
-    	$query = mysqli_query($conn,$sql);
-   		$row = mysqli_fetch_array($query);
-		if($row['UserName']==$UserName){
-			if($row['Password']==$Password){
-				$_SESSION['sess_user'] = $row['UserName'];
-            	echo "<script type='text/javascript'> document.location = './committee/dashboard.php'; </script>";
-			}
-			else{
-				$error="Password Incorrect";
-			}
-		}else{
-			$error="UserName Incorrect";
-		}
-	}
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -86,6 +25,7 @@ if(isset($_POST['login']))
 	.navbar-nav .nav-item .nav-link {
 		color: #000;
 	}
+	
 	
 	.navbar-nav .nav-item .btn-group .nav-link:hover {
 		text-decoration: none;
@@ -199,26 +139,124 @@ if(isset($_POST['login']))
 			margin: 10% 0 0 0;
 		}
 	}
-    .form-control{
-        border:1px solid #800060;
+    
+    .main{
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        background:url("assets/images/bg.png");
+        background-size: cover;
+        justify-content: center;
+        margin-top: -5px;
+        overflow-x: hidden;
     }
-    .form-control:focus {
-        background: #ffe6ff;
-        border:1px solid #800060;
-}
+   
+    
+        
+        
+    .main h1{
+        font-size: 4em;
+        margin-top: 170px;
+        padding-bottom: 20px;
+        z-index: 2;
+        color: #800060;
+        text-align: center;
+    }
+    .main p{
+        font-size: 1.7em;
+        font-weight: 600;
+        color: #800060;
+        text-align: center;
+    }
+    .mentor{
+        background: #800060;
+        border: 2px solid #800060;
+        color: white;
+		box-shadow: none;
+        border-radius: 2px;
+        padding: 5px 25px 5px 25px ;
+    }
+    .student{
+        color: #800060;
+		/* shadow :none; */
+        border-radius: 2px;
+        background: white;
+        border: 2px solid #800060;
+        padding: 5px 25px 5px 25px ;
+    }
+    .img{
+        margin-top: 150px;
+        margin-bottom: 50px;
+        z-index: -1;
+        
+       
+    }
+    
+    @media (max-width:780px){
+        .content{
+        height: 50%;
+        width: 100%;
+        background: none;
+        clip-path: none;
+        }    
+        .main{
+            background: none;
+        }
+    }
+    @media (max-width:768px){
+        .content{
+        height: 50%;
+        width: 100%;
+        
+        } 
+        .main h1{
+            margin-top: 50px;
+        }
+        .img{
+          margin-top: 0px;
+        }   
+    }
+	
+	.container .card:hover{
+		background: #eee6ff;
+		transition: .5s ease;
 
-    .btn{
+
+	}
+	h5{
+		color: #331477;
+	}
+	h3{
+		color: #331477;
+	}
+    .container a{
+	  text-decoration: none;
+	}
+	.courses {
+		color:#3c1a85;
+	}
+	.update{
         background: #800060;
         padding: 8px 25px 8px 25px;
         color: white;
     }
-    
-</style>
+	.update:hover{
+		color: white;
+
+	}
+	.close{
+        background: white;
+		color: black;
+        padding: 8px 25px 8px 25px;
+        
+    }
+	.modal .card{
+		background: whitesmoke;
+	}    
+	</style>
 </head>
 
-<body data-spy="scroll" data-target=".fixed-top">
+<body class="bg-white" data-spy="scroll" data-target=".fixed-top">
 	<section style="padding-top: 5rem;">
-		<nav class="navbar navbar-expand-lg navbar-light bg-order fixed-top bg-white">
+		<nav class="navbar navbar-expand-lg navbar-light bg-order shadow rounded fixed-top bg-white">
 			<!-- Image Logo -->
 			<a class="navbar-brand logo-image" href="index.php"><img src="assets/images/sac-logo.png" alt="alternative" width="150" height="65"></a>
 			<!-- Mobile Menu Toggle Button -->
@@ -239,39 +277,99 @@ if(isset($_POST['login']))
 		</nav>
 	</section>
 	<!-- end of navbar -->
-	<div class="container mt-5">
-		<div class="row mx-auto mt-5">
-			<div class="col-sm-7 col-md-7 col-lg-7 mx-auto mt-3">
-				<div class="card mb-5 p-2 shadow rounded">
-					<div class="card-body">
-						<div class="row mt-5 mb-4">
-							<h3 class="mx-auto"><?php echo htmlentities($Logintype) ?> LOGIN</h3>
+	<!-- end of navigation -->
+	<section>
+		<div class="row main mb-5">
+            
+            <div class="col-md">
+                <div class="content">
+                    <div class="contents">
+               <h1>SAC LMS</h1>
+               <p>Training platform designed to<br><br> help great teams grow</p>
+               <div class="justify-content-center d-flex">
+                   <div>
+                      <a href="login.php?Logintype=MENTOR"> <button   class="m-3 mentor">Mentor</button></a>
+                   </div>
+                   <div>
+                    <a href="login.php?Logintype=LEARNER"><button  class="m-3 student">Learner</button></a>
+                   </div>
+               </div>
+               </div>
+               </div>
+            </div>
+            <div class="col-md index">
+                <img class="rounded mx-auto d-block img" src="assets/images/index.svg" width="70%">
+
+
+            </div>
+        </div>
+	</section>
+	<section class="bg-white">
+		<div class="container mt-5 pt-5 pb-5">
+			                   <div class="row mb-5"><h3 class="courses">Courses Offered By Us </h3></div>
+				                    <div class="row">
+										<div class="col-md-4">
+											<a href="http://aitamsac.in/developersclub.php"><div class="card mb-4 shadow rounded">
+											<div class="card-body rounded">
+												<img src="assets/images/Dev-club.svg" alt="" height="200px" width="100%">
+												<h5 class="text-center">Developers Club</h5>
+												</div>
+												</div></a>
+										</div>
+										<div class="col-md-4">
+											<a href="http://aitamsac.in/roboticsclub.php"><div class="card mb-4   shadow rounded">
+											<div class="card-body rounded">
+												<a href="http://aitamsac.in/roboticsclub.php"><img src="assets/images/robotics.svg" alt="" height="200px" width="100%">
+												<h5 class="text-center">Robotics Club</h5>
+
+											</div>
+											</div></a>
+										</div>
+										<div class="col-md-4">
+											<a href="http://aitamsac.in/photographyclub.php"><div class="card mb-4 shadow rounded">
+											<div class="card-body rounded">
+												
+												<img src="assets/images/photography.svg" alt="" height="200px" width="100%">
+												<h5 class="text-center">Photography Club</h5>
+
+											</div>
+											</div></a>
+										</div>
+				                    </div>
+				<div class="row">
+					<div class="col-md-4">
+						<a href="http://aitamsac.in/automobileclub.php"><div class="card mb-4 shadow-lg rounded">
+						<div class="card-body rounded">
+							 <a href="http://aitamsac.in/automobileclub.php"><img src="assets/images/automobileclub.svg" alt="" height="200px" width="100%">
+							 <h5 class="text-center">Automobile Club</h5>
+
 						</div>
-						<form method="POST">
-							<div class="mb-3">
-                                <label for="formGroupExampleInput" class="form-label font-weight-bold text-dark">UserName :</label>
-                                <input type="text" class="form-control shadow-none" id="formGroupExampleInput" name="UserName" placeholder="Registration ID">
-                              </div>
-                              <div class="mb-3">
-                                <label for="formGroupExampleInput2" class="form-label font-weight-bold text-dark">PASSWORD :</label>
-                                <input type="text" class="form-control shadow-none" id="formGroupExampleInput2" name="Password" placeholder="Password">
-                              </div>
-                              <div class="row mt-5 mb-3">
-                                  
-                                  <div class="col-sm-3 mb-4 d-grid gap-2 mx-auto"><button class="btn" type="Submit" name="login">SUBMIT</button></div>
-                                
-                              </div>
-							
-							
-						  </form>
+						</div></a>
+					</div>
+					<div class="col-md-4">
+						<a href="http://aitamsac.in/culturalclub.php"><div class="card mb-4 shadow rounded">
+						<div class="card-body rounded">
+							 <img src="assets/images/cultural.svg" alt="" height="200px" width="100%">
+							 <h5 class="text-center">Cultural Club</h5>
+
+						</div>
+						</div></a>
+					</div>
+					<div class="col-md-4">
+						<div class="card mb-4 shadow rounded">
+						<div class="card-body rounded">
+							 <img src="assets/images/salesforce.svg" alt="" height="200px" width="100%">
+							 <h5 class="text-center">Salesforce</h5>
+
+						</div>
+						</div>
 					</div>
 				</div>
-			</div>
-
 		</div>
-	</div>
+	</section>
+    
 	<!-- Footer -->
-	<footer class="page-footer font-small unique-color-dark  bg_footer mt-5 melt" id="contact" style="margin-top:15%;">
+	<footer class="page-footer font-small unique-color-dark  bg_footer melt" id="contact">
 		<div class="container melt" style="padding-top:5rem;padding-bottom:2rem;text-align: center;width: 100%;">
 			<div class="row">
 				<div class="col-sm-3 fo_logo_align text-uppercase" style="margin-left:-4%;">
@@ -298,6 +396,7 @@ if(isset($_POST['login']))
 				<div class="col-sm-3 text-justify">
 					<h6 class="text-uppercase font-weight-bold" style="color: white">Contact Us</h6>
 					<hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+					<p><i class="fas fa-user text-white mr-3"></i><a href="login.php?Logintype=ADMIN" style="color:white; text-decoration:none;">Admin Login</a></p>
 					<p> <i class="fa fa-home mr-3"></i><a href="https://www.google.co.uk/maps/place/Aitam+CSE+Block(D)/@18.5656598,84.194148,17z/data=!3m1!4b1!4m5!3m4!1s0x3a3c523020188783:0x61f3da0e9b150a77!8m2!3d18.5656598!4d84.1963367" style="color:white; text-decoration:none;">Student Activity Center<br><small>Aditya Institute of Technology and Management,<br>Tekkali, Srikakulam District 532 201.</small></a> </p>
 					<p> <i class="fa fa-envelope mr-3"></i><a href="mailto:sac@adityatekkali.edu.in" style="color:white; text-decoration:none;">sac@adityatekkali.edu.in</a> </p>
 					<p> <i class="fa fa-envelope mr-3"></i><a href="mailto:aitamsac@gmail.com" style="color:white; text-decoration:none;">aitamsac@gmail.com</a> </p>
@@ -319,6 +418,15 @@ if(isset($_POST['login']))
 			</div>
 		</div>
 	</footer>
+
+
+
+
+			
+
+
+
+
 	<!-- Footer -->
 	<!-- Scripts -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -331,6 +439,11 @@ if(isset($_POST['login']))
 	<script src="assets/js/scripts.js"></script>
 	<!-- Custom scripts -->
 	<script src="assets/js/jquery.easing.min.js"></script>
+
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+
+	
 </body>
 
 </html>
