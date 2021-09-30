@@ -12,21 +12,25 @@
 	<meta name="author" content="Student Activity Center | AITAM">
 	<title>Student Activity Center | AITAM</title>
 	<!-- Favicon  -->
-	<link rel="icon" href="./assets/images/sac-favicon.png">
+	<link rel="icon" href="../assets/images/sac-favicon.png">
 	<!-- Bootstrap CSS CDN -->
+<<<<<<< HEAD
 	<link rel="stylesheet" href="/assets/css/bootstrap.min.cssn">
+=======
+	<link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+>>>>>>> 34c1c263a5af4f5ae4c86379a4ffa3aed8ec2630
 	<!-- Font awesome -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 	<!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <!-- Our Custom CSS -->
-	<link rel="stylesheet" href="./assets/css/main.css"> </head>
+	<link rel="stylesheet" href="../assets/css/main.css"> </head>
 <body>
 	<div class="wrapper">
 		<!-- Sidebar Holder -->
 		<nav id="sidebar">
 			<div class="sidebar-header">
-				<a class="navbar-brand" href="#"> <img src="./assets/images/logos/sac-white-logo.png" width="200" height="75" alt=""> </a>
+				<a class="navbar-brand" href="#"> <img src="../assets/images/logos/sac-white-logo.png" width="200" height="75" alt=""> </a>
 			</div>
 			<ul class="list-unstyled components">
 				<p>LMS portal</p>
